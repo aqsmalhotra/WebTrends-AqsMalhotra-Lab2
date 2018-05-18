@@ -6,7 +6,7 @@ var days;
     days[days["Wednesday"] = 3] = "Wednesday";
     days[days["Thursday"] = 4] = "Thursday";
     days[days["Friday"] = 5] = "Friday";
-    days[days["Saturda"] = 6] = "Saturda";
+    days[days["Saturday"] = 6] = "Saturday";
 })(days || (days = {}));
 var months;
 (function (months) {
@@ -26,6 +26,30 @@ var months;
 console.log(days.Sunday);
 //html elements
 var pTodayDate = document.getElementById("p--today-date");
+var bdayBtn = document.getElementById("button--birthday");
+var bdayMsg = document.getElementById("p--birthday-message");
+var bdayPick = document.getElementById("input--date-picker");
 var today = new Date();
 console.log(today.getMonth());
+//Part 1
 pTodayDate.innerHTML = "Today is " + days[today.getDay()] + " " + months[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear();
+//Part 2
+function makeDateString(inputDate) {
+    // if today is user's birthday
+    if ((inputDate.getDate()) === today.getDate()) {
+        return 'Happy Birthday';
+    }
+    //today is not user's birthday
+    var thisYearsBday = new Date();
+    thisYearsBday.setDate(inputDate.getDate());
+    thisYearsBday.setFullYear(inputDate.getFullYear());
+    thisYearsBday.setMonth(inputDate.getMonth());
+    return "Your birthday is " + days[thisYearsBday.getDay()] + " " + months[inputDate.getMonth()] + " " + inputDate.getDate() + ", " + today.getFullYear();
+}
+bdayBtn.onclick = function () {
+    //get bday from input
+    var userBday = bdayPick.value;
+    var userBdate = new Date(userBday);
+    //output bday message
+    bdayMsg.innerHTML = makeDateString(userBdate);
+};
